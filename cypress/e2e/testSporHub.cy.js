@@ -4,14 +4,12 @@ describe("Verify logo", () => {
         // Відкриваємо сторінку логіну
         cy.visit("https://teamchallenge-sport-store-frontend.vercel.app/");
 
-        // Відкриваємо меню сайту
-        cy.get('.undefined').click();
-
-        // Шукаємо кнопку Log out і натискаємо на неї
-        cy.contains('Log out').scrollIntoView().should("be.visible").click();
-
-        // Перевіряємо, що повернулися на сторінку логіна
-        cy.url().should('include', '/account/login');
+          // Шукаємо меню та клікамо на меню
+          cy.get('.border-none > img').click();
+          // Шукаємо лого та клікаємо
+          cy.get('.absolute > a > .undefined').click();
+          // Перевіряємо чи знаходимось на головній сторінці
+          cy.contains ('Популярні категорії').scrollIntoView().should("be.visible");
     });
 });
 describe('Get Links from Swiper Slides', () => {

@@ -160,3 +160,38 @@ describe('httpbin tests', () => {
       assert.equal("janet.weaver@reqres.in", email);
     })
   })
+  describe('httpbin tests', () => {
+    const request = {
+      method: 'GET',
+      url: 'https://httpbin.org/headers',
+      headers: {
+        'user-agent': 'My test user-agent'
+      },
+      failOnStatusCode: false
+    };
+  
+    it('test that user-agent set correctly', () => {
+      cy.request(request).then(response => {
+        assert.equal(200, response.status);
+        assert.equal("My test user-agent", response.requestHeaders['user-agent']);
+      })
+    })
+  })
+  describe('httpbin tests', () => {
+
+    const request = {
+      method: 'GET',
+      url: 'https://httpbin.org/headers',
+      headers: {
+        'Cookie': 'cookieName=cookieValue'
+      },
+      failOnStatusCode: false
+    };
+  
+    it('test send cookie', () => {
+      cy.request(request).then(response => {
+        assert.equal(200, response.status);
+        assert.equal("cookieName=cookieValue", response.requestHeaders['Cookie']);
+      })
+    })
+  })
