@@ -172,7 +172,8 @@ describe('Http API Tests TechHouse', () => {
   describe('get product test', () => { 
     const request = {
       method: 'GET',
-      url: 'https://dev.smarthome-team.store/api/Products/&75',
+      url: 'https://dev.smarthome-team.store/api/Products/',
+      Id: 75,
       failOnStatusCode: false
     };
   
@@ -268,6 +269,36 @@ describe('Http API Tests TechHouse', () => {
         
         // Перевіряємо, що тіло відповіді збігається з очікуваним
         assert.deepEqual(response.body, expectedBody);
+      });
+    });
+  });
+  describe('get product test with random productId', () => { 
+    it('should fetch a product and compare productId', () => {
+      // Генеруємо випадковий productId (наприклад, між 1 і 100)
+      const randomProductId = Math.floor(Math.random() * 100) + 1;
+  
+      // Динамічно задаємо запит з випадковим productId у форматі Postman
+      const request = {
+        method: 'GET',
+        url: `https://dev.smarthome-team.store/api/Products/${randomProductId}`, // Замінили на формат /Products/:Id
+        failOnStatusCode: false
+      };
+  
+      cy.request(request).then(response => {
+        // Перевіряємо, що статус відповіді 200 OK
+        expect(response.status).to.eq(200);
+  
+        // Отримуємо фактичний productId з тіла відповіді
+        const fetchedProductId = response.body.data[0].productId;
+  
+        // Перевіряємо, що productId у відповіді збігається з випадковим productId
+        expect(fetchedProductId).to.eq(randomProductId);
+  
+        // Додатково можна перевірити інші частини відповіді, якщо потрібно
+        expect(response.body).to.have.property('pageIndex');
+        expect(response.body).to.have.property('pageSize');
+        expect(response.body.data[0]).to.have.property('productName');
+        console.log(response.body);
       });
     });
   });

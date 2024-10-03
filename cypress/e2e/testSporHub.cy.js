@@ -45,6 +45,12 @@ describe('Get Links from Swiper Slides', () => {
               // After processing all links, compare actualLinks with expectedLinks
               expect(actualLinks).to.deep.equal(expectedLinks);
             });
+            it('test duration', () => {
+                cy.request(request).then(response => {
+                  assert.isTrue(response.duration <= 150)
+                })
+              })
+              
         });
     });
   });
